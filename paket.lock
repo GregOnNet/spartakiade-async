@@ -1,0 +1,7 @@
+
+
+GROUP Test
+NUGET
+  remote: https://www.nuget.org/api/v2
+  specs:
+    NUnit (3.2.0)

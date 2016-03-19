@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,12 +35,14 @@ namespace ConsoleApplication
     [Test]
     public void CalculateFibonacciSecqunce()
     {
-      Parallel.For(1, 10, (i,state) => Console.WriteLine(
-        Fibonacci(i)
-      ));
+      Parallel.For(1, 10, async (i, state) => 
+      {
+        var fib = await Fibonacci(i);
+        Console.WriteLine(fib);
+      });
     }
 
-    public int Fibonacci(int n)
+    public Task<int> Fibonacci(int n)
     {
       int a = 0;
       int b = 1;
@@ -50,7 +53,42 @@ namespace ConsoleApplication
         a = b;
         b = temp + b;
       }
-      return a;
+
+      return Task.FromResult(a);
+    }
+  }
+
+  [TestFixture]
+  public class TaskWhenAll
+  {
+    [Test]
+    public void TaskWhenAllForFibonacci()
+    {
+      var tasks = new List<Task>();
+      var boundaries = new int[] { 2, 3, 5, 8, 14, 21 };
+
+      foreach(var boundary in boundaries)
+      {
+        tasks.Add(Fibonacci(boundary));
+      }
+
+      var coordinator = Task.WhenAll(tasks);
+      Console.WriteLine(coordinator.Status);
+    }
+
+    public Task<int> Fibonacci(int n)
+    {
+      int a = 0;
+      int b = 1;
+
+      for (int i = 0; i < n; i++)
+      {
+        int temp = a;
+        a = b;
+        b = temp + b;
+      }
+
+      return Task.FromResult(a);
     }
   }
 }

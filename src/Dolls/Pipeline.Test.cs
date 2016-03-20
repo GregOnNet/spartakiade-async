@@ -13,9 +13,9 @@ namespace Dolls
     {
       var pipeBuilder = new PipelineBuilder();
       var pipeline = pipeBuilder
-        .Register(() => new Doll())
-        .Register(() => new Doll())
-        .Create();
+            .Register(() => new Doll())
+            .Register(() => new Doll())
+            .Create();
 
       await pipeline.Invoke();
     }

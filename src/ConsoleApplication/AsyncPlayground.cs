@@ -96,7 +96,7 @@ namespace ConsoleApplication
     public async Task CompletionSource()
     {
       var tcs = new TaskCompletionSource<int>();
-      var process = Process.Start(new ProcessStartInfo(@".\ConsoleApplication.exe") { UseShellExecute = false });
+      var process = Process.Start(new ProcessStartInfo(@"ping.exe") { UseShellExecute = false, CreateNoWindow = true });
       process.EnableRaisingEvents = true;
       process.Exited += (s, e) =>
       {
@@ -113,7 +113,7 @@ namespace ConsoleApplication
     public async Task CompletionSourceCustomAwait()
     {
       var tcs = new TaskCompletionSource<int>();
-      var process = await Process.Start(new ProcessStartInfo(@".\ConsoleApplication") { UseShellExecute = false });
+      var process = await Process.Start(new ProcessStartInfo(@"ping.exe") { UseShellExecute = false, CreateNoWindow = true });
     }
   }
 }

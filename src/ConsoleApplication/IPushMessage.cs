@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication
 {
-  public interface IPushMessages1
+  public interface IPushMessage
   {
     void Start(Func<Task> pump);
     Task Stop();

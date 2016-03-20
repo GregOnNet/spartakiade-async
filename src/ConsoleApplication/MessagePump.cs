@@ -6,13 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication
 {
-  interface IPushMessages
-  {
-    void Start(Func<Task> pump);
-    Task Stop();
-  }
-
-  class MessagePump : IPushMessages
+  class MessagePump : IPushMessage
   {
     private ConcurrentDictionary<Task, Task> _runningTasks;
     private CancellationTokenSource _cancellationSource;

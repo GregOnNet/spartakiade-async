@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -89,6 +90,30 @@ namespace ConsoleApplication
       }
 
       return Task.FromResult(a);
+    }
+
+    [Test]
+    public async Task CompletionSource()
+    {
+      var tcs = new TaskCompletionSource<int>();
+      var process = Process.Start(new ProcessStartInfo(@".\ConsoleApplication.exe") { UseShellExecute = false });
+      process.EnableRaisingEvents = true;
+      process.Exited += (s, e) =>
+      {
+        tcs.TrySetResult(process.ExitCode);
+      };
+
+      if(process.HasExited)
+        tcs.TrySetResult(process.ExitCode);
+
+      await tcs.Task.ConfigureAwait(false);
+    }
+
+    [Test]
+    public async Task CompletionSourceCustomAwait()
+    {
+      var tcs = new TaskCompletionSource<int>();
+      var process = await Process.Start(new ProcessStartInfo(@".\ConsoleApplication") { UseShellExecute = false });
     }
   }
 }

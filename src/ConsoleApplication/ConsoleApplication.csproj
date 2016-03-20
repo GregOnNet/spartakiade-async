@@ -45,7 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncPlayground.cs" />
-    <Compile Include="IPushMessages1.cs" />
+    <Compile Include="ChainOfResponsibility.cs" />
+    <Compile Include="IPushMessage.cs" />
     <Compile Include="MessagePump.cs" />
     <Compile Include="MessagePump.Test.cs" />
     <Compile Include="Program.cs" />

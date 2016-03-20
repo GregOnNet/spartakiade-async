@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Dolls.Messages;
 
 namespace Dolls.Contracts
 {
   public interface IPipeline
   {
-    Task Invoke();
+    Task Invoke(TransportMessage message);
   }
 }

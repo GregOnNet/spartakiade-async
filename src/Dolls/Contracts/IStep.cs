@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Dolls.Messages;
+using System;
 using System.Threading.Tasks;
 
 namespace Dolls.Contracts
 {
   public interface IStep
   {
-    Task Invoke(Func<Task> next);
+    Task Invoke(TransportMessage message, Func<Task> next);
   }
 }

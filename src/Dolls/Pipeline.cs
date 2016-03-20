@@ -1,4 +1,5 @@
 ﻿using Dolls.Contracts;
+using Dolls.Messages;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,18 +15,18 @@ namespace Dolls
       _actions = actions;
     }
 
-    public Task Invoke()
+    public Task Invoke(TransportMessage message)
     {
-      return InvokeInternal(0);
+      return InvokeInternal(message, 0);
     }
 
-    private Task InvokeInternal(int actionIndex = 0)
+    private Task InvokeInternal(TransportMessage message, int actionIndex = 0)
     {
       if (actionIndex == _actions.Count)
         return Task.CompletedTask;
 
       var step = _actions[actionIndex]();
-      return step.Invoke(() => InvokeInternal(actionIndex + 1));
+      return step.Invoke(message, () => InvokeInternal(message, actionIndex + 1));
     }
   }
 }
